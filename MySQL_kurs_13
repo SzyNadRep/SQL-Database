@@ -1,0 +1,16 @@
+SELECT * FROM users;
+
+INSERT INTO users(userName, displayName, yearOfBirth) VALUES('szymonn', 'Szymon Nadolny', 1996);
+INSERT INTO users(userName, displayName, yearOfBirth) VALUES('jank', 'Jan Kowalski', 1990);
+
+INSERT INTO users(userName, displayName, yearOfBirth) VALUES
+('paulinan', 'Paulina Nadolna', 1997),
+('faro', 'Faro', 2022),
+('kamilk', 'Kamiloo', 1980);
+
+SELECT * FROM users WHERE yearOfBirth > 2000 ;
+SELECT * FROM users WHERE userName LIKE'%a%';
+
+SELECT * FROM users WHERE userName IN('jank', 'szymonn');
+
+SELECT displayName FROM users ORDER BY yearOfBirth LIMIT 0,1;

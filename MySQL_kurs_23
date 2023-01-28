@@ -1,0 +1,64 @@
+SELECT * FROM users;
+SELECT * FROM user_groups;
+SELECT * FROM users_to_groups;
+
+UPDATE users SET userName = 'blazej123' WHERE id=3;
+UPDATE users SET userName = 'blazej1234', displayName = 'błażej2' WHERE id=3;
+
+DELETE FROM users WHERE id=3;
+DELETE FROM users;
+SET SQL_SAFE_UPDATES = 0;
+TRUNCATE user_groups;
+DROP TABLE users;
+
+INSERT INTO user_groups(groupName) VALUES('Programiści'), ('Narciarze'),
+('Miłośnicy polityki'), ('Znawcy historii');
+
+INSERT INTO users_to_groups(user_id, group_id) VALUES(1,1), (1,2), (2,1), (2,3),
+(2,4), (3,3), (4,1);
+
+SELECT COUNT(*) FROM users;
+SELECT COUNT(username) FROM users;
+
+SELECT MIN(yearOfBirth) FROM users;
+SELECT MAX(yearOfBirth) FROM users;
+SELECT SUM(yearOfBirth) FROM users;
+SELECT AVG(yearOfBirth) FROM users;
+
+
+SELECT userName FROM users WHERE id = 
+(SELECT user_id FROM users_to_groups WHERE group_id = 2);
+
+SELECT userName, groupName FROM users
+JOIN users_to_groups ON  users.id = users_to_groups.user_id
+JOIN user_groups ON users_to_groups.group_id = user_groups.id;
+
+SELECT users.id AS userId, userName, groupName FROM users
+JOIN users_to_groups ON  users.id = users_to_groups.user_id
+JOIN user_groups ON users_to_groups.group_id = user_groups.id;
+
+SELECT usersTable.id AS userId, userName, groupName FROM users AS usersTable
+JOIN users_to_groups ON  usersTable.id = users_to_groups.user_id
+JOIN user_groups ON users_to_groups.group_id = user_groups.id;
+
+
+SELECT user_groups.groupName, users.userName FROM users
+JOIN users_to_groups ON  users.id = users_to_groups.user_id
+JOIN user_groups ON users_to_groups.group_id = user_groups.id;
+
+
+SELECT user_groups.groupName, COUNT(users.userName) AS numberOfUsers FROM users
+JOIN users_to_groups ON  users.id = users_to_groups.user_id
+JOIN user_groups ON users_to_groups.group_id = user_groups.id
+GROUP BY user_groups.groupName ORDER BY numberOfUsers;
+
+
+SELECT user_groups.groupName, COUNT(users.userName) AS numberOfUsers FROM users
+JOIN users_to_groups ON  users.id = users_to_groups.user_id
+JOIN user_groups ON users_to_groups.group_id = user_groups.id
+GROUP BY user_groups.groupName 
+HAVING numberOfUsers > 1
+ORDER BY numberOfUsers;
+
+
+
